@@ -1,0 +1,91 @@
+@baseUrl = http://localhost:3000
+@token = replace-with-seeded-jwt
+@jobId = replace
+@planId = replace
+@approvalToken = replace
+@findingId = replace
+
+### Login
+POST {{baseUrl}}/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@cloudops.local",
+  "password": "CloudOps!demo"
+}
+
+### Live
+GET {{baseUrl}}/health/live
+
+### Ready
+GET {{baseUrl}}/health/ready
+
+### Metrics
+GET {{baseUrl}}/metrics
+
+### Sync inventory
+POST {{baseUrl}}/api/v1/resources/sync
+Authorization: Bearer {{token}}
+Content-Type: application/json
+X-Correlation-Id: demo-sync-1
+
+{}
+
+### List resources
+GET {{baseUrl}}/api/v1/resources?limit=50
+Authorization: Bearer {{token}}
+
+### Start diagnostics
+POST {{baseUrl}}/api/v1/diagnostics
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Idempotency-Key: demo-job-0001
+X-Correlation-Id: demo-diag-1
+
+{
+  "idempotencyKey": "demo-job-0001"
+}
+
+### Poll job
+GET {{baseUrl}}/api/v1/jobs/{{jobId}}
+Authorization: Bearer {{token}}
+
+### Findings
+GET {{baseUrl}}/api/v1/findings?limit=50
+Authorization: Bearer {{token}}
+
+### Recommendations
+GET {{baseUrl}}/api/v1/recommendations?limit=50
+Authorization: Bearer {{token}}
+
+### Create dry-run plan
+POST {{baseUrl}}/api/v1/remediations/plan
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "findingIds": ["{{findingId}}"],
+  "dryRun": true,
+  "idempotencyKey": "demo-plan-0001"
+}
+
+### Approve plan (admin)
+POST {{baseUrl}}/api/v1/remediations/{{planId}}/approve
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{}
+
+### Execute plan
+POST {{baseUrl}}/api/v1/remediations/{{planId}}/execute
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "approvalToken": "{{approvalToken}}",
+  "idempotencyKey": "demo-exec-0001"
+}
+
+### Audit events
+GET {{baseUrl}}/api/v1/audit-events
+Authorization: Bearer {{token}}

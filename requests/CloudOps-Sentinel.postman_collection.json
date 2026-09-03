@@ -1,0 +1,47 @@
+{
+  "info": {
+    "name": "CloudOps Sentinel",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "http://localhost:3000/api/v1/auth/login",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"admin@cloudops.local\",\n  \"password\": \"CloudOps!demo\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Sync resources",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": "http://localhost:3000/api/v1/resources/sync",
+        "body": { "mode": "raw", "raw": "{}" }
+      }
+    },
+    {
+      "name": "Create diagnostic job",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": "http://localhost:3000/api/v1/diagnostics",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"idempotencyKey\": \"demo-job-0001\"\n}"
+        }
+      }
+    }
+  ]
+}
