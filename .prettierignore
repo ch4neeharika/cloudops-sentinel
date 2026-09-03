@@ -1,0 +1,10 @@
+node_modules
+dist
+coverage
+*.lock
+*.yml
+*.yaml
+*.json
+monitoring
+infrastructure
+services/diagnostics/.pytest_cache

@@ -1,0 +1,40 @@
+{
+  "name": "cloudops-sentinel",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CloudOps Sentinel — Cloud Operations Automation Platform",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build -w @cloudops/shared && npm run build -w @cloudops/api && npm run build -w @cloudops/worker",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "eslint \"apps/**/*.ts\" \"packages/**/*.ts\" --max-warnings=0",
+    "lint:fix": "eslint \"apps/**/*.ts\" \"packages/**/*.ts\" --fix",
+    "format": "prettier --write \"apps/**/*.ts\" \"packages/**/*.ts\" \"*.md\" \"docs/**/*.md\"",
+    "format:check": "prettier --check \"apps/**/*.ts\" \"packages/**/*.ts\"",
+    "test": "npm run test --workspaces --if-present",
+    "test:api": "npm run test -w @cloudops/api",
+    "test:worker": "npm run test -w @cloudops/worker",
+    "test:shared": "npm run test -w @cloudops/shared",
+    "test:diagnostics": "cd services/diagnostics && python3 -m pytest -q",
+    "dev:api": "npm run dev -w @cloudops/api",
+    "dev:worker": "npm run dev -w @cloudops/worker",
+    "seed": "npm run seed -w @cloudops/api",
+    "docker:up": "docker compose up --build",
+    "docker:down": "docker compose down -v"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.10",
+    "@typescript-eslint/eslint-plugin": "^8.18.1",
+    "@typescript-eslint/parser": "^8.18.1",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2"
+  }
+}

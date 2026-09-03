@@ -1,0 +1,17 @@
+node_modules/
+dist/
+coverage/
+.pytest_cache/
+__pycache__/
+*.pyc
+.env
+*.log
+.DS_Store
+.idea/
+.vscode/
+*.tsbuildinfo
+.mongo-binaries/
+htmlcov/
+.mypy_cache/
+load-tests/results/
+.nyc_output/
