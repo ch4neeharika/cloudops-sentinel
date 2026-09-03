@@ -1,0 +1,11 @@
+# Optional LocalStack overlay. Real AWS mutations remain disabled.
+# docker compose -f docker-compose.yml -f docker-compose.localstack.yml up
+
+services:
+  localstack:
+    image: localstack/localstack:3.8
+    ports:
+      - "4566:4566"
+    environment:
+      SERVICES: s3,ec2,lambda,cloudwatch
+      DEFAULT_REGION: us-east-1

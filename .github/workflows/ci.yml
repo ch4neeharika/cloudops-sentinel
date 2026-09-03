@@ -1,0 +1,56 @@
+name: ci
+
+on:
+  push:
+    branches: [main, 'feat/**']
+  pull_request:
+
+jobs:
+  typescript:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+      - run: npm install
+      - run: npm run lint
+      - run: npm run format:check
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm audit --audit-level=high
+
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r services/diagnostics/requirements.txt -r services/diagnostics/requirements-dev.txt
+      - run: pytest -q
+        working-directory: services/diagnostics
+      - run: pip install pip-audit && pip-audit -r requirements.txt
+        working-directory: services/diagnostics
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: [typescript, python]
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -f infrastructure/docker/api.Dockerfile -t cloudops-sentinel-api:ci .
+      - run: docker build -f infrastructure/docker/worker.Dockerfile -t cloudops-sentinel-worker:ci .
+      - run: docker build -f infrastructure/docker/diagnostics.Dockerfile -t cloudops-sentinel-diagnostics:ci .
+
+  kubernetes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: azure/setup-kubectl@v4
+        with:
+          version: 'v1.31.0'
+      - name: Validate manifests
+        run: |
+          kubectl apply --dry-run=client -f infrastructure/kubernetes/namespace.yaml
+          kubectl apply --dry-run=client -f infrastructure/kubernetes

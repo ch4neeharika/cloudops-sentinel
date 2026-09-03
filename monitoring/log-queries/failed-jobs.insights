@@ -1,0 +1,3 @@
+fields @timestamp, jobId, status, msg
+| filter service = "worker" and msg like /job failed|dead/
+| sort @timestamp desc

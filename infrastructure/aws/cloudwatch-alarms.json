@@ -1,0 +1,38 @@
+{
+  "Alarms": [
+    {
+      "AlarmName": "cloudops-api-high-5xx",
+      "MetricName": "HttpErrors",
+      "Namespace": "CloudOpsSentinel",
+      "Statistic": "Sum",
+      "Period": 60,
+      "EvaluationPeriods": 5,
+      "Threshold": 5,
+      "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+      "TreatMissingData": "notBreaching",
+      "AlarmDescription": "API 5xx responses exceeded error budget."
+    },
+    {
+      "AlarmName": "cloudops-worker-dead-letter",
+      "MetricName": "JobDeadLetter",
+      "Namespace": "CloudOpsSentinel",
+      "Statistic": "Sum",
+      "Period": 300,
+      "EvaluationPeriods": 1,
+      "Threshold": 1,
+      "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+      "AlarmDescription": "A diagnostic job entered the dead-letter state."
+    },
+    {
+      "AlarmName": "cloudops-diagnostics-latency",
+      "MetricName": "DiagnosticsDurationP99",
+      "Namespace": "CloudOpsSentinel",
+      "Statistic": "Average",
+      "Period": 60,
+      "EvaluationPeriods": 5,
+      "Threshold": 2,
+      "ComparisonOperator": "GreaterThanThreshold",
+      "AlarmDescription": "Diagnostics p99 latency is above 2s."
+    }
+  ]
+}

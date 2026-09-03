@@ -1,0 +1,3 @@
+fields @timestamp, action, actorId, resourceType, resourceId
+| filter action like /remediation/
+| sort @timestamp desc

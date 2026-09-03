@@ -1,0 +1,28 @@
+{
+  "widgets": [
+    {
+      "type": "metric",
+      "x": 0,
+      "y": 0,
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "title": "API 5xx",
+        "metrics": [["CloudOpsSentinel", "HttpErrors", { "stat": "Sum", "period": 60 }]],
+        "view": "timeSeries"
+      }
+    },
+    {
+      "type": "metric",
+      "x": 12,
+      "y": 0,
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "title": "Job dead letters",
+        "metrics": [["CloudOpsSentinel", "JobDeadLetter", { "stat": "Sum", "period": 60 }]],
+        "view": "timeSeries"
+      }
+    }
+  ]
+}

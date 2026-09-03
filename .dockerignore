@@ -1,0 +1,12 @@
+node_modules
+dist
+coverage
+.git
+.env
+*.md
+.pytest_cache
+__pycache__
+load-tests
+monitoring
+infrastructure/kubernetes
+infrastructure/aws

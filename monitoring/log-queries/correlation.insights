@@ -1,0 +1,5 @@
+fields @timestamp, service, correlationId, jobId, msg
+| filter service in ["api", "worker"]
+| filter ispresent(correlationId)
+| sort @timestamp desc
+| limit 50
